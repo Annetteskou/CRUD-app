@@ -6,7 +6,8 @@ import { BrowserRouter } from "react-router";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter
+      basename={import.meta.env.DEV ? "/" : "/CRUD-app/"}>
       <App />
     </BrowserRouter>
   </React.StrictMode>
