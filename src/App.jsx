@@ -1,27 +1,31 @@
-import { useState, useEffect } from "react";
-import User from "./components/User";
+import { Route, Routes } from "react-router"; // import Routes og Route til routing
+import HomePage from "./Pages/HomePage"; // forsiden
+import CreatePage from "./Pages/CreatePage"; // side til at oprette ny bruger
+import NavBar from "./components/NavBar"; // navigation bar
+import UserDetailPage from "./pages/UserDetailPage"; // vis detaljer for en bruger
+import UserUpdatePage from "./pages/UserUpdatePage"; // opdater bruger
 
 function App() {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  async function fetchUsers() {
-    const response = await fetch("https://raw.githubusercontent.com/cederdorff/race/master/data/users.json"); // fetch the data from the API
-    const data = await response.json(); // parse the data from string to javascript array
-    setUsers(data); // set the data to the state}
-  }
-
   return (
+    // Hoved-container for app'en
     <main className="app">
-      <h1>Users</h1>
-      <section className="grid">
-        {users.map(user => (
-          <User key={user.id} name={user.name} image={user.image} title={user.title} mail={user.mail} />
-        ))}
-      </section>
+      {/* Navigation bar vises på alle sider */}
+      <NavBar />
+
+      {/* Definerer alle routes */}
+      <Routes>
+        {/* Forside */}
+        <Route path="/" element={<HomePage />} />
+
+        {/* Opret ny bruger */}
+        <Route path="/create" element={<CreatePage />} />
+
+        {/* Vis brugerens detaljer (UserDetailPage) */}
+        <Route path="/users/:id" element={<UserDetailPage />} />
+
+        {/* Update bruger */}
+        <Route path="/users/:id/update" element={<UserUpdatePage />} />
+      </Routes>
     </main>
   );
 }
